@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Uno.Model;
+using Uno.ViewModel;
 
 namespace Uno
 {
@@ -23,6 +25,11 @@ namespace Uno
         public MainWindow()
         {
             InitializeComponent();
+        }
+        void Button_pressed(object sender, RoutedEventArgs e)
+        {
+            CardsVM _vm = new CardsVM();
+            _vm.startGame();
         }
     }
 }
