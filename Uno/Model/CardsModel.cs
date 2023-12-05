@@ -10,10 +10,10 @@ namespace Uno.Model
     internal class CardsModel
     {
         private Colors[] colors = (Colors[])Enum.GetValues(typeof(Colors));
-        private List<Card> deck = new List<Card>();
-        private List<Card> hand { set; get; }
-        private List<Card> AIhand { set; get; }
-        private Card table;
+        public List<Card> deck = new List<Card>(); 
+        public List<Card> hand = new List<Card>();
+        public List<Card> AIhand = new List<Card>();
+        public Card table;
         public void generateDeck()
         {
             for (int i = 0; i < 10; i++)
@@ -67,22 +67,22 @@ namespace Uno.Model
             for (int i = 0; i < 5; i++)
             {
                 hand.Add(deck[i]);
-                deck.Remove(deck[i]);
                 Console.Write(deck[i].value);
-                Console.WriteLine(deck[i].color);
+                Console.Write(deck[i].color);
+                Console.Write(',');
+                deck.Remove(deck[i]);
 
             }
-            Console.WriteLine("AI Hand");
+           // Console.WriteLine("AI Hand");
             for (int i = 0; i < 5; i++)
             {
                 AIhand.Add(deck[i]);
                 deck.Remove(deck[i]);
-                Console.Write(deck[i].value);
-                Console.WriteLine(deck[i].color);
             }
             table = deck[0];
             Console.WriteLine("Table");
-            Console.Write(deck[0]);
+            Console.Write(table.value+table.color.ToString());
+            deck.Remove(table);
         }
         void Shuffle<T>(List<T> list)
         {
@@ -101,7 +101,7 @@ namespace Uno.Model
         }
 
 
-        bool playCard(Card card)
+        public bool playCard(Card card)
         {
             if (card.color == table.color || table.value == card.value || card.color == colors[4])
             {
@@ -109,6 +109,12 @@ namespace Uno.Model
             }
             
                 return false;
+        }
+
+        public void takeCard()
+        {
+            hand.Add(deck[0]);
+            deck.Remove(deck[0]);
         }
     }
 }
