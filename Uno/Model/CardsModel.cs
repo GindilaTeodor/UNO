@@ -42,16 +42,20 @@ namespace Uno.Model
             {
                 for (int j = 0; j < 3; j++)
                 {
+                    for (int k = 0; k < 4; k++)
+                    {
                     //0- stai o tura, 1-schimba sensul, 2- +2 carti
                     Card A = new Card();
-                    A.color = colors[4];
-                    A.value = j;
+                    A.color = colors[k];
+                    A.value = j+9;
                     deck.Add(A);
+
+                    }
                 }
             }
             for(int i=0;i<4; i++)
             {
-                for(int j=3;j<5; j++)
+                for(int j=0;j<2; j++)
                 {
                     //3- schimba culoarea , 4- +4 carti
                     Card A = new Card();
