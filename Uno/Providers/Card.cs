@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Uno.Providers
 {
-    internal class Card
+    public class Card
     {
-        public int value { get; set; }
+        public String value { get; set; }
         public Colors color { get; set; }
 
 

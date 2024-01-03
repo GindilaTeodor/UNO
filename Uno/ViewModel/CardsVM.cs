@@ -1,63 +1,141 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows;
+using Uno.Factory;
 using Uno.Model;
 using Uno.Providers;
 
 namespace Uno.ViewModel
 {
-    internal class CardsVM
+    public class CardsVM : INotifyPropertyChanged
     {
-        private CardsModel _cardsModel=new CardsModel();
-        private List<Card> deck=new List<Card>();
-        private Card table = new Card();
-        private List<Card> hand = new List<Card>();
-        private List<Card> AIhand = new List<Card>();
-        bool isFinished = false;
-        public void startGame()
-    {
-            _cardsModel.generateDeck();
-            _cardsModel.getDeck();
-            deck = _cardsModel.deck;
-            hand = _cardsModel.hand;
-            AIhand = _cardsModel.AIhand;
-            table=_cardsModel.table;
-            Play();
+        private CardsModel _cardsModel;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private ObservableCollection<Card> _hand;
+        public ObservableCollection<Card> Hand
+        {
+            get { return _hand; }
+            set
+            {
+                _hand = value;
+                OnPropertyChanged(nameof(Hand));
+            }
         }
 
-        public void Play()
+        private ObservableCollection<Card> _aiHand;
+        public ObservableCollection<Card> AIHand
         {
-            for(int i = 0; i < hand.Count; i++)
+            get { return _aiHand; }
+            set
             {
-                if (_cardsModel.playCard(hand[i])==true)
+                _aiHand = value;
+                OnPropertyChanged(nameof(AIHand));
+            }
+        }
+
+        private Card _table;
+        public Card Table
+        {
+            get { return _table; }
+            set
+            {
+                _table = value;
+                OnPropertyChanged(nameof(Table));
+            }
+        }
+
+        public CardsVM()
+        {
+            ICardFactory cardFactory = new CardFactory();
+            IDeckFactory deckFactory = new DeckFactory(); // Replace with your actual DeckFactory
+            ICardPlayStrategy colorStrategy = new ColorMatchStrategy();
+            ICardPlayStrategy valueStrategy = new ValueMatchStrategy();
+            ICardPlayStrategy wildStrategy = new WildCardStrategy();
+            List<ICardPlayStrategy> strategies = new List<ICardPlayStrategy>();
+            strategies.Add(colorStrategy);
+            strategies.Add(valueStrategy);
+            strategies.Add(wildStrategy);
+            _cardsModel = new CardsModel(cardFactory, deckFactory, strategies);
+            Hand = new ObservableCollection<Card>();
+            AIHand = new ObservableCollection<Card>();
+            InitializeGame();
+        }
+
+        public async void InitializeGame()
+        {
+            await GenerateDeckAsync();
+        }
+
+        private async Task GenerateDeckAsync()
+        {
+            await Task.Run(() => _cardsModel.generateDeck());
+
+            Hand = new ObservableCollection<Card>(_cardsModel.hand);
+            AIHand = new ObservableCollection<Card>(_cardsModel.AIhand);
+            Table = _cardsModel.table;
+        }
+
+        public void PlayCard(Card a)
+                
+        {
+            
+                if (_cardsModel.playCard(a))
                 {
-                    Console.Write(hand[i].value + hand[i].color.ToString()+"can be played");
-                }
-                else
+                Table = a;
+                Hand.Remove(a);
+                OnPropertyChanged(nameof(Hand));  // Notify UI that Hand has changed
+                OnPropertyChanged(nameof(Table));
+            }      
+        }
+
+        public bool AIPlayCard(Card a)
+        {
+            if (_cardsModel.AIplayCard(a))
+            {
+                Table = a;
+                AIHand.Remove(a);  
+                OnPropertyChanged(nameof(Table));
+                return true;
+            }
+            return false;
+        }
+
+       public void Take()
+        {
+
+            if (Hand.Any())
+            {
+                _cardsModel.takeCard();
+
+                // Dispatch UI update to the main/UI thread
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Console.Write(hand[i].value + hand[i].color.ToString() + "cant be played");
-                }
-                Console.WriteLine();
+                    Hand = new ObservableCollection<Card>(_cardsModel.hand);
+                });
             }
 
-            Console.WriteLine("Testare tras carte");
-            _cardsModel.takeCard();
-            hand = _cardsModel.hand;
-            for (int j = 0; j < hand.Count; j++)
+        }
+        public void AITake()
+        {
+
+            _cardsModel.AItakeCard();
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                Console.WriteLine("test");
-                Console.Write(hand[j].value);
-                Console.Write(hand[j].color);
-                Console.Write(',');
+                AIHand = new ObservableCollection<Card>(_cardsModel.AIhand);
+            });
 
-            }
+        }
 
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
-   
-
 }
+

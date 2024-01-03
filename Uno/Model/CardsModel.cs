@@ -9,85 +9,60 @@ namespace Uno.Model
 {
     internal class CardsModel
     {
+        private ICardFactory cardFactory;
+        private IDeckFactory deckFactory;
+        private List<ICardPlayStrategy> playStrategies = new List<ICardPlayStrategy>();
+
+        public CardsModel(List<ICardPlayStrategy> strategies)
+        {
+            this.playStrategies = strategies;
+        }
+
+        public CardsModel(ICardFactory cardFactory, IDeckFactory deckFactory, List<ICardPlayStrategy> strategies)
+        {
+            this.cardFactory = cardFactory;
+            this.deckFactory = deckFactory;
+            this.playStrategies = strategies;
+            //generateDeck();
+        }
+
+
         private Colors[] colors = (Colors[])Enum.GetValues(typeof(Colors));
-        public List<Card> deck = new List<Card>(); 
+        public List<Card> deck = new List<Card>();
         public List<Card> hand = new List<Card>();
         public List<Card> AIhand = new List<Card>();
         public Card table;
+
+        public List<Card> GetDeck()
+        {
+            return deck;
+        }
+
         public void generateDeck()
         {
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    Card A = new Card();
-                    if (i == 0)
-                    {
-                        A.value = i;
-                        A.color = colors[j];
-                        deck.Add(A);
-                    }
-                    else
-                    {
-                        A.value = i;
-                        A.color = colors[j];
-                        deck.Add(A);
-                        deck.Add(A);
-                    }
-
-                }
-            }
-
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    for (int k = 0; k < 4; k++)
-                    {
-                    //0- stai o tura, 1-schimba sensul, 2- +2 carti
-                    Card A = new Card();
-                    A.color = colors[k];
-                    A.value = j+9;
-                    deck.Add(A);
-
-                    }
-                }
-            }
-            for(int i=0;i<4; i++)
-            {
-                for(int j=0;j<2; j++)
-                {
-                    //3- schimba culoarea , 4- +4 carti
-                    Card A = new Card();
-                    A.color = colors[4];
-                    A.value = j;
-                    deck.Add(A);
-                }
-            }
-        }
-        public void  getDeck()
-        {
+            deck.Clear();
+            List<Card> newDeck = deckFactory.CreateDeck(cardFactory);
+            deck = newDeck;
             Shuffle(deck);
-            for (int i = 0; i < 5; i++)
+            for(int i = 0;i<5;i++)
             {
                 hand.Add(deck[i]);
-                Console.Write(deck[i].value);
-                Console.Write(deck[i].color);
-                Console.Write(',');
-                deck.Remove(deck[i]);
-
             }
-           // Console.WriteLine("AI Hand");
+            deck.RemoveRange(0, Math.Min(5, deck.Count));
             for (int i = 0; i < 5; i++)
             {
                 AIhand.Add(deck[i]);
-                deck.Remove(deck[i]);
             }
+            deck.RemoveRange(0, Math.Min(5, deck.Count));
             table = deck[0];
-            Console.WriteLine("Table");
-            Console.Write(table.value+table.color.ToString());
-            deck.Remove(table);
+            deck.RemoveRange(0, Math.Min(1, deck.Count));
         }
+        void ShuffleDeck()
+        {
+            Shuffle(deck);
+
+        }
+
         void Shuffle<T>(List<T> list)
         {
             Random random = new Random();
@@ -107,17 +82,36 @@ namespace Uno.Model
 
         public bool playCard(Card card)
         {
-            if (card.color == table.color || table.value == card.value || card.color == colors[4])
+            bool CanPlay = false;
+            if (playStrategies[0].CanPlay(table,card) || playStrategies[1].CanPlay(table, card)|| playStrategies[2].CanPlay(table, card) || table.color==Colors.Black)
             {
-                return true;
+                CanPlay = true;
+                table = card;
+                hand.Remove(card);
             }
-            
-                return false;
+            return CanPlay;
+        }
+
+        public bool AIplayCard(Card card)
+        {
+            bool CanPlay = false;
+            if (playStrategies[0].CanPlay(table, card) || playStrategies[1].CanPlay(table, card) || playStrategies[2].CanPlay(table, card) || table.color == Colors.Black)
+            {
+                CanPlay = true;
+                table = card;
+                AIhand.Remove(card);
+            }
+            return CanPlay;
         }
 
         public void takeCard()
         {
             hand.Add(deck[0]);
+            deck.Remove(deck[0]);
+        }
+        public void AItakeCard()
+        {
+            AIhand.Add(deck[0]);
             deck.Remove(deck[0]);
         }
     }

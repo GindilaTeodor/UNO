@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Margin="240,186,240,0" Height="156" VerticalAlignment="Top" Click="Button_pressed"> Apasa</Button>
+        <Label HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="25" RenderTransformOrigin="0.5,0.5" Margin="366,66,0,0">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.107"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform> Uno
+        </Label>
+        <Button Margin="252,165,252,0" Height="52" VerticalAlignment="Top" Click="Start_Pressed">Start Game</Button>
+        <Button Margin="252,255,252,127" Click="Credit_Pressed">Credits</Button>
+        <Button Margin="252,342,252,40">Exit</Button>
     </Grid>
 </Window>

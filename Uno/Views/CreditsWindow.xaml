@@ -1,0 +1,17 @@
+﻿<Window x:Class="Uno.Views.CreditsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Uno.Views"
+        mc:Ignorable="d"
+        Title="CreditsWindow" Height="450" Width="800">
+    <Grid>
+        <Label HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,33,0,0" FontSize="30">Credits</Label>
+        <Label HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,104,0,0" FontSize="20">Proiect Realizat de:</Label>
+        <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="312,161,0,0" FontSize="20">Munteanu Maria Magdalena</Label>
+        <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="315,217,0,0" FontSize="20">Gindila Teodor Ilie:</Label>
+        <Label HorizontalAlignment="Left" VerticalAlignment="Top" Margin="315,276,0,0" FontSize="20">Matusan Raul Liviu</Label>
+        <Button Margin="282,333,266,46" Click="Menu_Pressed">Back to menu</Button>
+    </Grid>
+</Window>

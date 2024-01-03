@@ -12,8 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Uno.Factory;
 using Uno.Model;
 using Uno.ViewModel;
+using Uno.Views;
 
 namespace Uno
 {
@@ -26,10 +28,23 @@ namespace Uno
         {
             InitializeComponent();
         }
-        void Button_pressed(object sender, RoutedEventArgs e)
+        void Start_Pressed(object sender, RoutedEventArgs e)
         {
-            CardsVM _vm = new CardsVM();
-            _vm.startGame();
+            CardsVM _cardsVm = new CardsVM();
+            GameView a = new GameView(_cardsVm);
+            a.Show();
+            this.Close();
+        }
+
+        void Credit_Pressed(object sender, RoutedEventArgs e)
+        {
+            CreditsWindow a = new CreditsWindow();
+            a.Show();
+            this.Close();
+        }
+        void Exit_Pressed(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
