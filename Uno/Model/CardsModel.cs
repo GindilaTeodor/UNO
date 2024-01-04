@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using Uno.Providers;
 
 namespace Uno.Model
 {
-    internal class CardsModel
+    public class CardsModel
     {
         private ICardFactory cardFactory;
         private IDeckFactory deckFactory;
@@ -40,9 +40,9 @@ namespace Uno.Model
 
         public void generateDeck()
         {
-            deck.Clear();
             List<Card> newDeck = deckFactory.CreateDeck(cardFactory);
             deck = newDeck;
+            Console.WriteLine(deck.Count);
             Shuffle(deck);
             for(int i = 0;i<5;i++)
             {
@@ -106,13 +106,19 @@ namespace Uno.Model
 
         public void takeCard()
         {
-            hand.Add(deck[0]);
-            deck.Remove(deck[0]);
+            if (deck.Any())
+            {
+                hand.Add(deck[0]);
+                deck.Remove(deck[0]);
+            }
         }
         public void AItakeCard()
         {
-            AIhand.Add(deck[0]);
-            deck.Remove(deck[0]);
+            if (deck.Any())
+            {
+                AIhand.Add(deck[0]);
+                deck.RemoveAt(0);
+            }
         }
     }
 }

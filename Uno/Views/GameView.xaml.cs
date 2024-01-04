@@ -30,14 +30,13 @@ namespace Uno.Views
             {
                 if (e.PropertyName == nameof(cardsVM.Hand))
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
+                    
                         Hand.Clear();
                         foreach (var card in cardsVM.Hand)
                         {
                             Hand.Add(card.value.ToString());
                         }
-                    });
+                    
                 }
             };
 
@@ -50,9 +49,8 @@ namespace Uno.Views
 
         private void More_Clicked(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(_cardsVM.AIHand.Count);
             if (Wildused == true) { 
-            if(_cardsVM.Table.value=="+2" || _cardsVM.Table.value == "+4"|| _cardsVM.Table.value == "CULOARE" || _cardsVM.Table.value == "O" || _cardsVM.Table.value == "<=>" )
+            if(_cardsVM.Table.value=="+2" || _cardsVM.Table.value == "+4"|| _cardsVM.Table.value == "Culoare" || _cardsVM.Table.value == "O" || _cardsVM.Table.value == "<=>" )
             {
                     if(_cardsVM.Table.value == "+2")
                     {

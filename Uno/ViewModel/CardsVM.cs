@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.Windows;
 using Uno.Factory;
 using Uno.Model;
@@ -67,19 +67,17 @@ namespace Uno.ViewModel
             InitializeGame();
         }
 
-        public async void InitializeGame()
+        public void InitializeGame()
         {
-            await GenerateDeckAsync();
-        }
-
-        private async Task GenerateDeckAsync()
-        {
-            await Task.Run(() => _cardsModel.generateDeck());
+           // await GenerateDeckAsync();
+            _cardsModel.generateDeck();
 
             Hand = new ObservableCollection<Card>(_cardsModel.hand);
             AIHand = new ObservableCollection<Card>(_cardsModel.AIhand);
             Table = _cardsModel.table;
         }
+
+
 
         public void PlayCard(Card a)
                 
@@ -114,10 +112,9 @@ namespace Uno.ViewModel
                 _cardsModel.takeCard();
 
                 // Dispatch UI update to the main/UI thread
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
+              
                     Hand = new ObservableCollection<Card>(_cardsModel.hand);
-                });
+               
             }
 
         }
@@ -125,10 +122,9 @@ namespace Uno.ViewModel
         {
 
             _cardsModel.AItakeCard();
-            System.Windows.Application.Current.Dispatcher.Invoke(() =>
-            {
+            
                 AIHand = new ObservableCollection<Card>(_cardsModel.AIhand);
-            });
+            
 
         }
 

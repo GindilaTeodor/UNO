@@ -19,6 +19,6 @@
         </Label>
         <Button Margin="252,165,252,0" Height="52" VerticalAlignment="Top" Click="Start_Pressed">Start Game</Button>
         <Button Margin="252,255,252,127" Click="Credit_Pressed">Credits</Button>
-        <Button Margin="252,342,252,40">Exit</Button>
+        <Button Margin="252,342,252,40" Click="Exit_Pressed">Exit</Button>
     </Grid>
 </Window>
