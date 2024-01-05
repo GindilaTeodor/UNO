@@ -7,11 +7,42 @@
         xmlns:viewmodel="clr-namespace:Uno.ViewModel" xmlns:Converters="clr-namespace:Uno.Converters"
         d:DataContext="{d:DesignInstance Type=viewmodel:CardsVM}"
         mc:Ignorable="d"
-        Title="GameView" Height="450" Width="800">
+        Title="GameView" Height="1000" Width="1900"
+        >
     <Window.Resources>
         <Converters:ColorConvertors x:Key="ColorConvertors"/>
     </Window.Resources>
     <Grid>
+        <Image Source="..\Images\Background.jpg" Stretch="UniformToFill" Opacity="0.7"/>
+        <ItemsControl ItemsSource="{Binding AIHand}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Width="100" Height="150" Margin="5" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="\Images\CardBack.png" Stretch="UniformToFill"/>
+                        </Button.Background>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <ItemsControl ItemsSource="{Binding Hand}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -22,12 +53,56 @@
                 <DataTemplate>
                     <Button Click="Play_Clicked" Width="100" Height="150" Margin="5" Background="{Binding color, Converter={StaticResource ColorConvertors}}" >
                         <TextBlock Foreground="White" FontSize="20" Text="{Binding value}" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Rectangle Width="100" Height="150" Fill="{Binding Table.color, Converter={StaticResource ColorConvertors}}" VerticalAlignment="Center" HorizontalAlignment="Center"></Rectangle>
-        <TextBlock Foreground="White" FontSize="20" Text="{Binding Table.value}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50" Width="80" Height=" 100" Click="More_Clicked">Trage Carte</Button>
+        
+        <Button Width="100" Height="150" Margin="5" Background="{Binding Table.color, Converter={StaticResource ColorConvertors}}" >
+            <TextBlock Foreground="White" FontSize="20" Text="{Binding Table.value}" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+        
+        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50" Width="80" Height=" 100" Click="More_Clicked" >
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+            Trage Carte
+        </Button>
     </Grid>
 </Window>

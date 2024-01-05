@@ -101,13 +101,16 @@ namespace Uno.Views
 
                     }
                     Wildused = false;
+                    AIMove();
                 }
             }
             else
             {
                 Button clickedButton = (Button)sender;
                 Card clickedCard = (Card)clickedButton.DataContext;
-                _cardsVM.PlayCard(clickedCard);
+                
+                bool test = _cardsVM.PlayCard(clickedCard);
+
                 if (_cardsVM.AIHand.Count == 0 || _cardsVM.Hand.Count == 0)
                 {
                     MessageBox.Show("You win");
@@ -119,8 +122,12 @@ namespace Uno.Views
                 {
                     Wildused = true;
                 }
+                if(test)
+                {
+                    AIMove();
+                }
             }
-                AIMove();
+                
 
         }
 

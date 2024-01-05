@@ -32,6 +32,7 @@ namespace Uno
         {
             CardsVM _cardsVm = new CardsVM();
             GameView a = new GameView(_cardsVm);
+            a.WindowState = WindowState.Maximized;
             a.Show();
             this.Close();
         }

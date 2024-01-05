@@ -79,7 +79,7 @@ namespace Uno.ViewModel
 
 
 
-        public void PlayCard(Card a)
+        public bool PlayCard(Card a)
                 
         {
             
@@ -89,7 +89,9 @@ namespace Uno.ViewModel
                 Hand.Remove(a);
                 OnPropertyChanged(nameof(Hand));  // Notify UI that Hand has changed
                 OnPropertyChanged(nameof(Table));
-            }      
+                return true;
+            }
+            return false;
         }
 
         public bool AIPlayCard(Card a)

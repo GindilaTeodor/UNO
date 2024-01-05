@@ -5,20 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Uno"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        <Label HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="25" RenderTransformOrigin="0.5,0.5" Margin="366,66,0,0">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-0.107"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Label.RenderTransform> Uno
-        </Label>
-        <Button Margin="252,165,252,0" Height="52" VerticalAlignment="Top" Click="Start_Pressed">Start Game</Button>
-        <Button Margin="252,255,252,127" Click="Credit_Pressed">Credits</Button>
-        <Button Margin="252,342,252,40" Click="Exit_Pressed">Exit</Button>
+        <Image Source="..\Images\Background.jpg" Stretch="UniformToFill" Opacity="0.7"/>
+        <Image Source="Images\UNO_Logo.png" Margin="286,1,286,256" />
+        <Button Margin="252,186,252,0" Height="52" VerticalAlignment="Top" Click="Start_Pressed">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+            Start Game
+        </Button>
+        <Button Margin="252,255,252,127" Click="Credit_Pressed" >
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+            Credits
+        </Button>
+        <Button Margin="252,342,252,40" Click="Exit_Pressed"  >
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+            Exit
+        </Button>
     </Grid>
 </Window>
